@@ -1,24 +1,17 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { Context } from "../context/Context";
 import Cards from "../components/Cards/Cards";
 import Card from "../components/Card/Card";
 
-import getData from "../utils/getData";
 import "./home.scss";
 
 const Home = () => {
-  const [characters, setCharacter] = useState([]);
-
-  useEffect(async () => {
-    const result = await getData();
-
-    console.log(result);
-    setCharacter(result);
-  }, []);
+  const { characters } = useContext(Context);
 
   return (
     <section className="home">
       <Cards>
-        {characters.map((data) => (
+        {characters.map((data, i) => (
           <Card key={data.id} {...data} />
         ))}
       </Cards>
