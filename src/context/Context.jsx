@@ -4,6 +4,7 @@ import getData from "../utils/getData";
 const Context = createContext();
 
 const ContextProvider = ({ children }) => {
+  const [loading, setLoading] = useState(true);
   const [characters, setCharacter] = useState([]);
   const [rotate, setRotate] = useState({});
   const [cards, setCards] = useState();
@@ -12,17 +13,20 @@ const ContextProvider = ({ children }) => {
 
   const startGame = async () => {
     const data = await getData();
-    const initialState = await data.reduce((a, c) => {
+    const initialRotate = await data.reduce((a, c) => {
       return { ...a, [c.id]: false };
     }, {});
-    setRotate(initialState);
+    setRotate(initialRotate);
     setCharacter(data);
+    setMovements(0);
+    setLoading(false);
   };
+
+  const winGame = () => {};
 
   const verifyCards = (id) => {
     setClick(false);
     if (cards.split("-")[0] === id.split("-")[0]) {
-      console.log("hola");
       setCards("");
       setClick(true);
     } else {
@@ -49,7 +53,7 @@ const ContextProvider = ({ children }) => {
 
   return (
     <Context.Provider
-      value={{ characters, startGame, rotate, movements, rotateCard }}
+      value={{ loading, characters, startGame, rotate, movements, rotateCard }}
     >
       {children}
     </Context.Provider>
