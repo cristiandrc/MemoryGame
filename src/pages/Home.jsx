@@ -6,16 +6,22 @@ import Card from "../components/Card/Card";
 import "./home.scss";
 
 const Home = () => {
-  const { characters } = useContext(Context);
+  const { characters, startGame, movements } = useContext(Context);
 
   return (
-    <section className="home">
-      <Cards>
-        {characters.map((data, i) => (
-          <Card key={data.id} {...data} />
-        ))}
-      </Cards>
-    </section>
+    <>
+      <section className="home">
+        <Cards>
+          {characters.map((data, i) => (
+            <Card key={data.id} {...data} />
+          ))}
+        </Cards>
+        <div className="home-menu">
+          <span>Movimientos {movements}</span>
+          <button onClick={startGame}>play again</button>
+        </div>
+      </section>
+    </>
   );
 };
 
