@@ -4,9 +4,9 @@ import getData from "../utils/getData";
 const Context = createContext();
 
 const ContextProvider = ({ children }) => {
-  const [loading, setLoading] = useState(true);
   const [characters, setCharacter] = useState([]);
   const [rotate, setRotate] = useState({});
+  const [loading, setLoading] = useState(true);
   const [cards, setCards] = useState();
   const [click, setClick] = useState(true);
   const [movements, setMovements] = useState(0);
@@ -22,7 +22,10 @@ const ContextProvider = ({ children }) => {
     setLoading(false);
   };
 
-  const winGame = () => {};
+  const winGame = () => {
+    const isComplete = Object.values(rotate).every((e) => e === true);
+    console.log(isComplete);
+  };
 
   const verifyCards = (id) => {
     setClick(false);
@@ -47,9 +50,9 @@ const ContextProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    startGame();
-  }, []);
+  useEffect(winGame, [rotate]);
+
+  useEffect(startGame, []);
 
   return (
     <Context.Provider
