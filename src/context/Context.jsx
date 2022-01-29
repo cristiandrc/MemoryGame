@@ -10,8 +10,10 @@ const ContextProvider = ({ children }) => {
   const [cards, setCards] = useState();
   const [click, setClick] = useState(true);
   const [movements, setMovements] = useState(0);
+  const [gameWon, setGameWon] = useState(false);
 
   const startGame = async () => {
+    setLoading(true);
     const data = await getData();
     const initialRotate = await data.reduce((a, c) => {
       return { ...a, [c.id]: false };
@@ -19,12 +21,13 @@ const ContextProvider = ({ children }) => {
     setRotate(initialRotate);
     setCharacter(data);
     setMovements(0);
+    setGameWon(false);
     setLoading(false);
   };
 
   const winGame = () => {
     const isComplete = Object.values(rotate).every((e) => e === true);
-    console.log(isComplete);
+    isComplete && setGameWon(true);
   };
 
   const verifyCards = (id) => {
@@ -56,7 +59,15 @@ const ContextProvider = ({ children }) => {
 
   return (
     <Context.Provider
-      value={{ loading, characters, startGame, rotate, movements, rotateCard }}
+      value={{
+        loading,
+        characters,
+        startGame,
+        rotate,
+        movements,
+        rotateCard,
+        gameWon,
+      }}
     >
       {children}
     </Context.Provider>

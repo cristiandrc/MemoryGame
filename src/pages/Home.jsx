@@ -4,10 +4,12 @@ import Cards from "../components/Cards/Cards";
 import Card from "../components/Card/Card";
 import Loading from "../components/Loading/Loading";
 import Portal from "../components/Portal/Portal";
+import Win from "../components/Win/Win";
 import "./home.scss";
 
 const Home = () => {
-  const { loading, characters, startGame, movements } = useContext(Context);
+  const { loading, characters, startGame, movements, gameWon } =
+    useContext(Context);
 
   return (
     <>
@@ -15,6 +17,11 @@ const Home = () => {
         {loading && (
           <Portal>
             <Loading />
+          </Portal>
+        )}
+        {gameWon && !loading && (
+          <Portal>
+            <Win movements={movements} onClick={startGame} />
           </Portal>
         )}
 
