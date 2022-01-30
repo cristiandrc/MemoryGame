@@ -1,12 +1,10 @@
 import "./menu.scss";
-
+import Button from "../Button/Button";
 const Menu = ({ movements, startGame }) => {
   return (
     <div className="menu">
-      <span>Movimientos {movements}</span>
-      <button className="menu-button" onClick={startGame}>
-        Play again
-      </button>
+      <span>Movimientos: {movements}</span>
+      <Button onClick={startGame} />
     </div>
   );
 };

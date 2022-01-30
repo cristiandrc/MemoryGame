@@ -8,20 +8,4 @@
   align-items: center;
   color: white;
   border-radius: 5px;
-
-  &-button {
-    width: 100px;
-    height: 25px;
-    background: rgb(255, 0, 0);
-    border: none;
-    color: white;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.5s ease;
-
-    &:hover {
-      background-color: rgb(110, 42, 42);
-    }
-  }
 }
