@@ -9,8 +9,15 @@ import Win from "../components/Win/Win";
 import "./home.scss";
 
 const Home = () => {
-  const { loading, characters, startGame, movements, gameWon } =
-    useContext(Context);
+  const {
+    loading,
+    characters,
+    startGame,
+    movements,
+    gameWon,
+    seconds,
+    minutes,
+  } = useContext(Context);
 
   return (
     <>
@@ -22,7 +29,11 @@ const Home = () => {
         )}
         {gameWon && !loading && (
           <Portal>
-            <Win movements={movements} onClick={startGame} />
+            <Win
+              movements={movements}
+              onClick={startGame}
+              time={{ seconds, minutes }}
+            />
           </Portal>
         )}
 
@@ -33,7 +44,11 @@ const Home = () => {
                 <Card key={data.id} {...data} />
               ))}
             </Cards>
-            <Menu startGame={startGame} movements={movements} />
+            <Menu
+              startGame={startGame}
+              movements={movements}
+              time={{ seconds, minutes }}
+            />
           </>
         )}
       </section>

@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { useStopwatch } from "react-timer-hook";
 import getData from "../utils/getData";
 
 const Context = createContext();
@@ -12,7 +13,13 @@ const ContextProvider = ({ children }) => {
   const [movements, setMovements] = useState(0);
   const [gameWon, setGameWon] = useState(false);
 
+  const { seconds, minutes, start, pause, reset } = useStopwatch({
+    autoStart: false,
+  });
+
   const startGame = async () => {
+    reset();
+    pause();
     setLoading(true);
     const data = await getData();
     const initialRotate = await data.reduce((a, c) => {
@@ -27,7 +34,10 @@ const ContextProvider = ({ children }) => {
 
   const winGame = () => {
     const isComplete = Object.values(rotate).every((e) => e === true);
-    isComplete && setGameWon(true);
+    if (isComplete) {
+      pause();
+      setGameWon(true);
+    }
   };
 
   const verifyCards = (id) => {
@@ -45,6 +55,7 @@ const ContextProvider = ({ children }) => {
   };
 
   const rotateCard = (id) => {
+    !movements && start();
     if (click) {
       setRotate({ ...rotate, [id]: true });
       setCards(id);
@@ -67,6 +78,8 @@ const ContextProvider = ({ children }) => {
         movements,
         rotateCard,
         gameWon,
+        seconds,
+        minutes,
       }}
     >
       {children}
